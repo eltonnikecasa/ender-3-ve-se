@@ -1,27 +1,30 @@
-M220 S100
-M221 S100
+M220 S100 ;Reset Feedrate 
+M221 S100 ;Reset Flowrate 
+ 
+M140 S[bed_temperature_initial_layer_single] ;Set bed temp
 
-M140 S[first_layer_bed_temperature]
+G28 ;Home
 
-G28
-M420 S1 Z2
+M420 S1 Z2 ;Ativa mesh salvo (CR-Touch rápido)
 
-G92 E0
-G1 Z2.0 F3000
+G92 E0 ;Reset Extruder 
+G1 Z2.0 F3000 ;Move Z Axis up 
 
-M104 S[first_layer_temperature]
+M104 S[nozzle_temperature_initial_layer] ;Set nozzle temp 
 
-G1 X5 Y20 Z0.28 F5000.0
+G1 X-2.1 Y20 Z0.28 F5000.0 ;Move to start position (mantido original)
 
-M190 S[first_layer_bed_temperature]
-M109 S[first_layer_temperature]
+M190 S[bed_temperature_initial_layer_single] ;Wait bed 
+M109 S[nozzle_temperature_initial_layer] ;Wait nozzle 
 
-G92 E0
-G1 X5 Y145.0 Z0.28 F1500.0 E15
-G1 X8 Y145.0 F5000.0
-G1 X8 Y20 Z0.28 F1500.0 E30
+; --- PURGA ---
+G1 X-2.1 Y145.0 Z0.28 F1500.0 E15 
+G1 X-2.4 Y145.0 Z0.28 F5000.0 
+G1 X-2.4 Y20 Z0.28 F1500.0 E30 
 
-G92 E0
-G1 E-1.0 F1800
-G1 Z2.0 F3000
-G1 E0.0 F1800
+G92 E0  
+G1 E-1.0000 F1800 ;Retract 
+G1 Z2.0 F3000 ;Lift 
+G1 E0.0000 F1800
+
+; ==== INÍCIO DA IMPRESSÃO ====
